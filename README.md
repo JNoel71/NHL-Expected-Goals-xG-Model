@@ -1,6 +1,6 @@
 # NHL Expected Goals (xG) Model
 ## Overview
-This is a Python repo that contains a machine learning model that uses data from the NHL API to determine the likelihood a given shot will result in a goal.
+This is a Python repo that contains a machine learning model that uses data from the NHL API to determine the likelihood a given shot will result in a goal. If you would like to run the model you should run the python scripts in the order they appear below.
 
 - **shotDataCreation.py** - this script uses the play-by-play data found in the raw data folder to create the model features listed below and store that in a CSV.
 - **venueAdjustedShotDataCreation.py** - this script adjusts the x and y coordinates as well as the distance for each shot. The script uses the output CSV from shotDataCreation.py to do this. Shots are adjusted with two different methods one developed by Ken Krzywicki and one developed by Shucker and Curro. Shucker's and Curro's approach is implemented with a Python module called NHLArenaAdjuster, you can read more about it here: https://github.com/delara38/NHLArenaAdjuster. After shots are adjusted they are stored in a CSV.
