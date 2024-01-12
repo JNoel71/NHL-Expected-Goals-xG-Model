@@ -1,20 +1,20 @@
 # NHL Expected Goals (xG) Model
 ## Overview
-This is a Python repo that contains a machine learning model which uses data from the NHL API to determine the likelihood a given shot will result in a goal.
+This is a Python repo that contains a machine learning model that uses data from the NHL API to determine the likelihood a given shot will result in a goal.
 
-- **shotDataCreation.py** - this script uses the play-by-play data found in the raw data folder to create the model features listed below and store that in a csv.
-- **venueAdjustedShotDataCreation.py** - this script adjusts the x and y coordinates as well as the distance for each individual shot. The script uses the output csv from shotDataCreation.py to do this. Shots are adjusted with two different methods one developed by Ken Krzywicki and one developed by Shucker and Curro. Shucker's and Curro's approach is implemented with a Python module called NHLArenaAdjuster, you can read more about it here: https://github.com/delara38/NHLArenaAdjuster. After shots are adjusted they are stored in a csv.
-- **xGModelCreation.py** - this script constructs a model using light gradient boosting and the shot data output by venueAdjustedShotDataCreation.py. This model then predicts the outcome of the shots between the years of 2010-2021 and stores its predictions in a csv.
-- **benchmarkModel.py** - this script reads the csv output by xGModelCreation.py and benchmarks the performance of the model using log loss and area under the curve (auc).
+- **shotDataCreation.py** - this script uses the play-by-play data found in the raw data folder to create the model features listed below and store that in a CSV.
+- **venueAdjustedShotDataCreation.py** - this script adjusts the x and y coordinates as well as the distance for each shot. The script uses the output CSV from shotDataCreation.py to do this. Shots are adjusted with two different methods one developed by Ken Krzywicki and one developed by Shucker and Curro. Shucker's and Curro's approach is implemented with a Python module called NHLArenaAdjuster, you can read more about it here: https://github.com/delara38/NHLArenaAdjuster. After shots are adjusted they are stored in a CSV.
+- **xGModelCreation.py** - this script constructs a model using light gradient boosting and the shot data output by venueAdjustedShotDataCreation.py. This model then predicts the outcome of the shots between the years 2010-2021 and stores its predictions in a CSV.
+- **benchmarkModel.py** - this script reads the CSV output by xGModelCreation.py and benchmarks the performance of the model using log loss and area under the curve (AUC).
 
 ## How it Works
 ### The Data
-The model is built on data from the NHL's API, which is spatiotemporal data that records events which took place throughout games. This includes information about when the event took place, it's location on the ice, and the teams/players that were involved in the play. I retrieved the data from the NHL API using a python module named hockey scraper which was developed by Harry Shomer and you can read about here: https://github.com/HarryShomer/Hockey-Scraper.
+The model is built on data from the NHL's API, which is spatiotemporal data that records events that took place throughout games. This includes information about when the event took place, its location on the ice, and the teams/players that were involved in the play. I retrieved the data from the NHL API using a Python module named hockey scraper which was developed by Harry Shomer and you can read about it here: https://github.com/HarryShomer/Hockey-Scraper.
 
 ### Model Features
 The following features are used in the model.
 
-1) isStrongSide - a integer representing if a player is not shooting across their body.
+1) isStrongSide - an integer representing if a player is not shooting across their body.
 2) x - the x coordinate reported by the NHL (standardized to the right side of the ice).
 3) y - the y coordinate reported by the NHL (standardized to the right side of the ice).
 4) Strength - skaters on the ice for minus skaters on the ice against.
@@ -48,10 +48,10 @@ You can read about Ken Krzywicki's shot adjustment method here: http://hockeyana
 You can read about Shucker's and Curro's shot adjustment method here: https://www.sloansportsconference.com/research-papers/total-hockey-rating.
 
 ### Light Gradient Boosting
-The model is built using Light Gradient Boosting a machine learning model developed and released by microsoft in 2016. The documentation for the model can be found here: https://lightgbm.readthedocs.io/en/stable/.
+The model is built using Light Gradient Boosting a machine learning model developed and released by Microsoft in 2016. The documentation for the model can be found here: https://lightgbm.readthedocs.io/en/stable/.
 
 ### Hyperparameter Tuning
-The Light Gradient Boosting model was had its hyperparameters tuned with the use of Optuna's LightGBMTunerCV. Which uses built-in LightGBM integration and Optuna's trial system to tune hyperparameters over cross validation. In this case, I made use of 10-fold stratified cross-validation as the data is imbalanced (about 94% negative instances).
+The Light Gradient Boosting model had its hyperparameters tuned with the use of Optuna's LightGBMTunerCV, which uses built-in LightGBM integration and Optuna's trial system to tune hyperparameters over cross-validation. In this case, I made use of 10-fold stratified cross-validation as the data is imbalanced (about 94% negative instances).
 
 ## Performance
 ### Overall Performance
@@ -67,7 +67,7 @@ The table below shows the model performance over 10-fold stratified cross-valida
 | Short Handed  | 0.8220 |   0.2064   |
 
 #### Test Season (2021)
-The table below shows the model perforamnce for the left out testing set which was all shots from the 2021 NHL season.
+The table below shows the model performance for the left-out testing set which was all shots from the 2021 NHL season.
 
 |  Strength     |   AUC  |   Log Loss |
 | ------------- | ------ | ---------- |
@@ -78,12 +78,12 @@ The table below shows the model perforamnce for the left out testing set which w
 
 ### Season-over-season Performance
 
-The plot below shows how the performance of the model changes season-over-season. As is evident the model performs worse as time passes. This is likely due to strategical changes in the league, which have adopted a more expected goals centric approach and now value shot quality (xG) more than quantity (CORSI). If you are interested in reading more about how analytics has changed over the years take a look at this article: https://ecp.ep.liu.se/index.php/linhac/article/view/479.
+The plot below shows how the performance of the model changes season over season. As is evident the model performs worse as time passes. This is likely due to strategical changes in the league, which have adopted a more expected goals-centric approach and now value shot quality (xG) more than quantity (CORSI). If you are interested in reading more about how analytics has changed over the years take a look at this article: https://ecp.ep.liu.se/index.php/linhac/article/view/479.
 
 ![Image](./Plots/performance.png)
 
 ## Other Links
-If you are interested in expected goals models and want to see how others have constructed their models take a look at some of these resources.
+If you are interested in expected goals models and would like to see how others have constructed their models take a look at some of these resources.
 
 - Evolving Hockey's xG Model - https://evolving-hockey.com/blog/a-new-expected-goals-model-for-predicting-goals-in-the-nhl/
 - Hockey-Statistics xG Model - https://hockey-statistics.com/2022/08/14/building-an-xg-model-v-1-0/#:~:text=Expected%20goals%20is%20a%20way,information%20in%20my%20xG%20model
