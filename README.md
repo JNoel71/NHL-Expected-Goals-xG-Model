@@ -44,6 +44,7 @@ The following features are used in the model.
 28) specialStrength - an encoded integer that represented less common team strengths (3v3, 6v4, etc.).
 
 You can read about Ken Krzywicki's shot adjustment method here: http://hockeyanalytics.com/Research_files/SQ-RS0910-Krzywicki.pdf.
+
 You can read about Shucker's and Curro's shot adjustment method here: https://www.sloansportsconference.com/research-papers/total-hockey-rating.
 
 ### Light Gradient Boosting
